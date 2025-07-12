@@ -3,12 +3,17 @@ import cors from 'cors';
 import mongoose from 'mongoose';
 import dotenvx from '@dotenvx/dotenvx'
 
+// Extra imports:
+import authRoutes from './routes/authRoutes.js';
+
 dotenvx.config();
 const app = express();
 
 // Middlewares
 app.use(cors());
 app.use(express.json());
+
+app.use("/api/auth", authRoutes);
 
 // Routes : Temp for checking the server
 app.get('/', (request, response) => {
