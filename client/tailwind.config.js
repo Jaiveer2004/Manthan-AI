@@ -1,0 +1,12 @@
+// tailwind.config.js
+export default {
+  content: ["./index.html", "./src/**/*.{js,ts,jsx,tsx}"],
+  theme: {
+    extend: {
+      colors: {
+        testgreen: '#00ff88',
+      },
+    },
+  },
+  plugins: [],
+};
