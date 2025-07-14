@@ -6,26 +6,26 @@ export default function ComingSoon() {
   const handleSubmit = async () => {
     if (!email) {
       return alert("Please enter an email!");
+    }
 
-      try {
-        const res = await fetch("http://localhost:4598/api/email/subscribe", {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({ email }),
-        });
+    try {
+      const res = await fetch(`${import.meta.env.VITE_API_URL}/api/email/subscribe`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ email }),
+      });
 
-        const data = await res.json();
+      const data = await res.json();
 
-        if (res.ok) {
-          alert(data.message || "Subscribed!");
-          setEmail("");
-        } else {
-          alert(data.message || "Something went wrong");
-        }
-      } catch (err) {
-        console.error(err);
-        alert("Network error");
+      if (res.ok) {
+        alert(data.message || "Subscribed!");
+        setEmail("");
+      } else {
+        alert(data.message || "Something went wrong");
       }
+    } catch (err) {
+      console.error(err);
+      alert("Network error");
     }
   };
 
