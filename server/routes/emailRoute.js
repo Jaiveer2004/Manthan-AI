@@ -1,5 +1,6 @@
 import express from 'express';
 import Email from '../models/Email.js';
+import { sendWelcomeEmail } from '../utils/mailer.js';
 
 const router = express.Router();
 
@@ -17,6 +18,10 @@ router.post('/subscribe', async (request, response) => {
     }
     const newEmail = new Email({ email });
     await newEmail.save();
+
+    console.log("📩 Email to send:", email);
+    await sendWelcomeEmail(email);
+    console.log("✅ Email sent to:", email);
 
     response.status(201).json({ message: "Subscribed Successfully" });
   } catch (err) {

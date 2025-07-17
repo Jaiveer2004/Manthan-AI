@@ -6,6 +6,7 @@ import dotenvx from '@dotenvx/dotenvx'
 // Extra imports:
 import authRoutes from './routes/authRoutes.js';
 import emailRoute from './routes/emailRoute.js';
+import testEmail from './routes/testEmail.js'
 
 dotenvx.config();
 const app = express();
@@ -16,6 +17,7 @@ app.use(express.json());
 
 app.use('/api/auth', authRoutes);
 app.use('/api/email', emailRoute);
+app.use('/api/test', testEmail);
 
 // Routes : Temp for checking the server
 app.get('/', (request, response) => {
