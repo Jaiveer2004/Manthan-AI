@@ -28,7 +28,7 @@ export default function ParticleBackground() {
       interactivity: {
         events: {
           onClick: {
-            enable: true,
+            enable: false,
             mode: "push",
           },
           onHover: {
@@ -41,7 +41,7 @@ export default function ParticleBackground() {
             quantity: 4,
           },
           repulse: {
-            distance: 200,
+            distance: 100,
             duration: 0.4,
           },
         },
