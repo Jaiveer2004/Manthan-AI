@@ -98,7 +98,7 @@ export default function ComingSoon() {
       {/* Main content with higher z-index */}
       <div className="relative z-10 flex flex-col items-center justify-center space-y-8 w-full h-full">
         {/* Header */}
-        <div className="text-center space-y-2 mt-20">
+        <div className="text-center space-y-2">
           <h1 className="heading font-extrabold tracking-tight animate-fade-in-up">
             Manthan.
           </h1>
@@ -143,7 +143,7 @@ export default function ComingSoon() {
         </div>
 
         {/* Footer */}
-        <footer className="mt-auto pt-8 border-t border-gray-700/50 w-full max-w-4xl">
+        <footer className="mt-20 pt-8 border-t border-gray-700/50 w-full max-w-4xl">
           <div className="flex flex-col md:flex-row items-center justify-between gap-4 px-6">
             {/* Left side - Brand */}
             <div className="flex items-center gap-2">
