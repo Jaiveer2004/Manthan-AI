@@ -5,6 +5,7 @@ export default function ComingSoon() {
   const [email, setEmail] = useState("");
   const [isLoading, setIsLoading] = useState(false);
   const [notification, setNotification] = useState(null);
+  const [lastSubmittedEmail, setLastSubmittedEmail] = useState("");
 
   useEffect(() => {
     document.body.style.overflow = 'hidden';
@@ -35,6 +36,11 @@ export default function ComingSoon() {
       return;
     }
 
+    // Prevent duplicate submissions for the same email
+    if (email === lastSubmittedEmail && isLoading) {
+      return;
+    }
+
     const commonDomains = [
       "gmail.com",
       "yahoo.com",
@@ -55,23 +61,30 @@ export default function ComingSoon() {
     }
 
     setIsLoading(true);
+    setLastSubmittedEmail(email);
 
     try {
+      // Add timeout for better UX
+      const controller = new AbortController();
+      const timeoutId = setTimeout(() => controller.abort(), 10000); // 10 second timeout
+
       const res = await fetch(
         `${import.meta.env.VITE_API_URL}/api/email/subscribe`,
         {
           method: "POST",
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify({ email }),
+          signal: controller.signal,
         }
       );
 
+      clearTimeout(timeoutId);
       const data = await res.json();
 
       if (res.ok) {
         showNotification(
           "success",
-          data.message || "Successfully subscribed! 🎉"
+          "Successfully subscribed! Check your email for confirmation. 🎉"
         );
         setEmail("");
       } else {
@@ -79,10 +92,17 @@ export default function ComingSoon() {
       }
     } catch (err) {
       console.error(err);
-      showNotification(
-        "error",
-        "Network error. Please try again."
-      );
+      if (err.name === 'AbortError') {
+        showNotification(
+          "error",
+          "Request timeout. Please try again."
+        );
+      } else {
+        showNotification(
+          "error",
+          "Network error. Please try again."
+        );
+      }
     } finally {
       setIsLoading(false);
     }

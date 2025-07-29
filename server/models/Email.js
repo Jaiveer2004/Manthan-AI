@@ -10,7 +10,11 @@ const emailSchema = new mongoose.Schema({
   createdAt: {
     type: Date,
     default: Date.now(),
+    index: true,  
   },
 });
+
+// Single index definition with unique constraint
+emailSchema.index({ email: 1 }, { unique: true });
 
 export default mongoose.model("Email", emailSchema); 
