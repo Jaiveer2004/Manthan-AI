@@ -21,7 +21,6 @@ router.post('/subscribe', subscribeLimit, async (request, response) => {
   try {
     const { email } = request.body;
 
-    // Enhanced validation
     if (!email) {
       return response.status(400).json({ error: "Email is required." });
     }
@@ -32,7 +31,6 @@ router.post('/subscribe', subscribeLimit, async (request, response) => {
       return response.status(400).json({ error: "Invalid email format." });
     }
 
-    // Check for existing email with case-insensitive search
     const existing = await Email.findOne({ email: email.toLowerCase() });
     if (existing) {
       return response.status(409).json({ message: "You have already subscribed." });
@@ -40,7 +38,6 @@ router.post('/subscribe', subscribeLimit, async (request, response) => {
     const newEmail = new Email({ email: email.toLowerCase() });
     await newEmail.save();
 
-    // Send email asynchronously without blocking the response
     sendWelcomeEmail(email).then(() => {
       console.log("✅ Email sent to:", email);
     }).catch((err) => {
